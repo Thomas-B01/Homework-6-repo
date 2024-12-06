@@ -1,44 +1,47 @@
+
+// Function call to initialize app
+init();
 // TODO: Include packages needed for this application
 import inquirer from "inquirer";
-//import fs from Nodefs
+import fs from "fs"
 // TODO: Create an array of questions for user input
 const questions = [
-{
-type: "input",
-name:  "title",
-message: "project name"
-},
-{
-type: "input",
-name: "description",
-Message: "describe the project"
-},
-{
-type: "input",
-name: "instalation",
-message: "how to install this project"
-},
-{
-type: "input",
-name: "usage",
-message: "how would you use this project"
-},
-{
-type: "input",
-name: "credits",
-message: "who worked on this project"
-},
-{
-type: "input",
-name: "licence",
-message: "what liscence was used"
-}
-]
+    {
+      type: "input",
+      name: "title",
+      message: "Project name"
+    },
+    {
+      type: "input",
+      name: "description",
+      message: "Describe the project"
+    },
+    {
+      type: "input",
+      name: "installation",
+      message: "How to install this project"
+    },
+    {
+      type: "input",
+      name: "usage",
+      message: "How would you use this project"
+    },
+    {
+      type: "input",
+      name: "credits",
+      message: "Who worked on this project"
+    },
+    {
+      type: "input",
+      name: "license",
+      message: "What license was used"
+    }
+  ];
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-const filePath = path.join(process.cwd(), fileName);
-  fs.writeFileSync(filePath, data, "utf-8");
-  console.log(`README file has been generated: ${fileName}`);
+const writeREADME = (data) => {
+    fs.writeFile('README.md', data, (err) => {
+      err ? console.error(err) : console.log('README generated');
+    });
 }
 
 // TODO: Create a function to initialize app
@@ -47,32 +50,22 @@ function init() {
     .prompt(questions)
     .then((answers) => {
       const readmeContent = `
-# ${answers.title}
+ ${answers.title}
 
-## Description
+
 ${answers.description}
 
-## Installation
 ${answers.installation}
 
-## Usage
 ${answers.usage}
 
-## Contributing
-${answers.contributing}
+${answers.credits}
 
-## Tests
-${answers.tests}
-
-## License
-This project is licensed under the ${answers.license} license.
+${answers.license}
 `;
 
-      writeToFile("README.md", readmeContent);
+writeREADME(readmeContent);
     })
-    .catch((error) => {
-      console.error("Error initializing app:", error);
-    });
 }   
 
 
